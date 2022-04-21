@@ -23,14 +23,19 @@ class Cattle
     private $code;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $milk;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $ration;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $weight;
 
     /**
      * @ORM\Column(type="date")
@@ -64,26 +69,38 @@ class Cattle
         return $this;
     }
 
-    public function getMilk(): ?int
+    public function getMilk(): ?float
     {
         return $this->milk;
     }
 
-    public function setMilk(int $milk): self
+    public function setMilk(float $milk): self
     {
         $this->milk = $milk;
 
         return $this;
     }
 
-    public function getRation(): ?int
+    public function getRation(): ?float
     {
         return $this->ration;
     }
 
-    public function setRation(int $ration): self
+    public function setRation(float $ration): self
     {
         $this->ration = $ration;
+
+        return $this;
+    }
+
+    public function getWeight(): ?float
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(float $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }
