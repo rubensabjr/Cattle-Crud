@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block tittle %} {{tittle}} {% endblock %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ tittle }}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">ID - {{ cattle.id }} </li>
+                <li class="list-group-item">Código - {{ cattle.code }} </li>
+                <li class="list-group-item">Leite (L) - {{ cattle.milk }} </li>
+                <li class="list-group-item">Ração (Kg) - {{ cattle.ration }} </li>
+                <li class="list-group-item">Peso (Kg) - {{ cattle.weight }} </li>
+                <li class="list-group-item">Nascimento - {{ cattle.birth.format('d-m-Y') }} </li>
+                <li class="list-group-item">Abate - {{ cattle.slaughter ? 'true' : 'false' }} </li>
+                <li class="list-group-item">Abatido - {{ cattle.slaughtered ? 'true' : 'false' }} </li> 
+            </ul>
+        </div>
+    </div>
+{% endblock %}

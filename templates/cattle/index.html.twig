@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block tittle %} {{tittle}} {% endblock %}
+
+{% block body %}
+    <h1> {{tittle}} </h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Código</td>
+                    <td>Leite (L)</td>
+                    <td>Ração (Kg)</td>
+                    <td>Peso (Kg)</td>
+                    <td>Nascimento</td>
+                    <td>Abate</td>
+                    <td>Abatido</td> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for cattle in cattles %}
+                    <tr>
+                        <td>{{ cattle.id }}</td>
+                        <td> {{ cattle.code }} </td>
+                        <td> {{ cattle.milk }} </td>
+                        <td> {{ cattle.ration }} </td>
+                        <td> {{ cattle.weight }} </td>
+                        <td> {{ cattle.birth.format('d-m-Y') }} </td>
+                        <td> {{ cattle.slaughter ? 'true' : 'false' }} </td>
+                        <td> {{ cattle.slaughtered ? 'true' : 'false' }} </td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
