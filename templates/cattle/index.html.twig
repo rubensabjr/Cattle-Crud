@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1> {{tittle}} </h1>
+    <a  href="{{ path('create') }}" class="btn btn-primary">Novo</a>
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -15,7 +16,8 @@
                     <td>Peso (Kg)</td>
                     <td>Nascimento</td>
                     <td>Abate</td>
-                    <td>Abatido</td> 
+                    <td>Abatido</td>
+                    <td>Ações</td> 
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +30,8 @@
                         <td> {{ cattle.weight }} </td>
                         <td> {{ cattle.birth.format('d-m-Y') }} </td>
                         <td> {{ cattle.slaughter ? 'true' : 'false' }} </td>
-                        <td> {{ cattle.slaughtered ? 'true' : 'false' }} </td> 
+                        <td> {{ cattle.slaughtered ? 'true' : 'false' }} </td>
+                        <td> <a  href="{{ path('getById', {id: cattle.id}) }}" class="btn btn-primary">Ver</a> </td>  
                     </tr>
                 {% endfor %}
             </tbody>
