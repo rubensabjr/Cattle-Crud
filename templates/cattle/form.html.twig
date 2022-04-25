@@ -1,8 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block tittle %} {{tittle}} {% endblock %}
-
 {% block body %}
-    <h1> {{tittle}} </h1>
-    {{ form(form) }}
+    <div class="container" style="box-shadow: 0px 0px 15px #0004; margin: 5% auto 0 auto; width: 90%;">
+        <h3> {{title}} </h3>
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{form_row(form.code)}}
+            </div>
+
+            <div class="col-md-6">
+                {{form_row(form.birth)}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                {{form_row(form.milk)}}
+            </div>
+
+            <div class="col-md-4">
+                {{form_row(form.ration)}}
+            </div>
+
+            <div class="col-md-4">
+                {{form_row(form.weight)}}
+            </div>
+        </div>
+        
+        <div class="row text-right" style="margin-bottom: 15px;">
+            <div class="col-xs-12">
+                {{form_widget(form.Salvar , {'attr': {'class': 'btn btn-primary'} })}}
+                
+                {% if new == true %}
+                    <a href="{{ path('getAll') }}" class="btn btn-danger" style="margin-left: 3px;">
+                        Cancelar
+                    </a>
+
+                {% else %}
+                    <a href="{{ path('getById', {id: id}) }}" class="btn btn-danger" style="margin-left: 3px;">
+                        Cancelar
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

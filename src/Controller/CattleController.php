@@ -33,8 +33,9 @@ class CattleController extends AbstractController{
         }
 
         return $this->renderForm('cattle/form.html.twig', [
-            'tittle'=> 'Novo Registro',
-            'form'=> $form
+            'title'=> 'Novo Registro',
+            'form'=> $form,
+            'new'=> true
         ]); 
     }
 
@@ -48,7 +49,7 @@ class CattleController extends AbstractController{
             throw $this->createNotFoundException('Not found!');
 
         return $this->render('cattle/index.html.twig', [
-            'tittle'=> 'Gerenciamento do Gado',
+            'title'=> 'Gerenciamento do Gado',
             'cattles'=> $cattles
         ]);
     }
@@ -63,7 +64,7 @@ class CattleController extends AbstractController{
             throw $this->createNotFoundException('No cattle found for id '.$id);
 
         return $this->render('cattle/cattle.html.twig', [
-            'tittle'=> 'Gado',
+            'title'=> 'Gado',
             'cattle'=> $cattle
         ]);
     }
@@ -89,8 +90,10 @@ class CattleController extends AbstractController{
         }
 
         return $this->renderForm('cattle/form.html.twig', [
-            'tittle'=> 'Editar Registro',
-            'form'=> $form
+            'title'=> 'Editar Registro',
+            'form'=> $form,
+            'new'=> false,
+            'id'=> $id
         ]); 
     }
 }
