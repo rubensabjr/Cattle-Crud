@@ -4,27 +4,41 @@ namespace App\Controller;
 
 use App\Entity\Cattle;
 use App\Form\CattleType;
+use App\Service\CattleService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CattleController extends AbstractController{
+class CattleController extends AbstractController
+{
+
+    /**
+     * @Route("/", name="index")
+     */
+    public function index() : Response 
+    {
+        return $this->render('base.html.twig', ['title'=> 'Bem Vindo!']);
+    }
 
     /**
      * @Route("/cattle/new", name="create")
      */
-    public function create(ManagerRegistry $doctrine, Request $request) : Response {
+    public function create(ManagerRegistry $doctrine, Request $request, CattleService $cs) : Response 
+    {
         $entityManager = $doctrine->getManager();
         
         $cattle = new Cattle();
+        $cattle->setSlaughtered(false);
+
+        if($cs->Slaughter($cattle))
+            $cattle->setSlaughter(true);
+        else
+            $cattle->setSlaughter(false);
+
         $form = $this->createForm(CattleType::class, $cattle);
         $form->handleRequest($request);
-        
-        ##Temporário
-        $cattle->setSlaughter(false);
-        $cattle->setSlaughtered(false);
 
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($cattle);
@@ -42,7 +56,8 @@ class CattleController extends AbstractController{
     /**
      * @Route("/cattle", name="getAll")
      */
-    public function getAll(ManagerRegistry $doctrine) : Response {
+    public function getAll(ManagerRegistry $doctrine) : Response 
+    {
         $cattles = $doctrine->getRepository(Cattle::class)->findAll();
         
         if(!$cattles)
@@ -57,7 +72,8 @@ class CattleController extends AbstractController{
     /**
      * @Route("/cattle/{id}", name="getById")
      */
-    public function getById(ManagerRegistry $doctrine, int $id) : Response {
+    public function getById(ManagerRegistry $doctrine, int $id) : Response 
+    {
         $cattle = $doctrine->getRepository(Cattle::class)->find($id);
 
         if(!$cattle)
@@ -72,7 +88,7 @@ class CattleController extends AbstractController{
     /**
      * @Route("/cattle/edit/{id}", name="update")
      */
-    public function update(ManagerRegistry $doctrine, int $id, Request $request): Response
+    public function update(ManagerRegistry $doctrine, int $id, Request $request, CattleService $cs): Response
     {
         $entityManager = $doctrine->getManager();
         
@@ -80,6 +96,11 @@ class CattleController extends AbstractController{
 
         if(!$cattle)
             throw $this->createNotFoundException('No cattle found for id '.$id);
+
+        if($cs->Slaughter($cattle))
+            $cattle->setSlaughter(true);
+        else
+            $cattle->setSlaughter(false);
 
         $form = $this->createForm(CattleType::class, $cattle);
         $form->handleRequest($request);

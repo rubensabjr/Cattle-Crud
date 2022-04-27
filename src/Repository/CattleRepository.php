@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Cattle;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -47,32 +48,52 @@ class CattleRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Cattle[] Returns an array of Cattle objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getForSlaughter()
     {
+        $now = new DateTime('now');
+        $sub = $now->sub(new \DateInterval('P5Y'));
+        $date = $sub->format('Y-m-d');
+
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('c.slaughter = :slaughter OR c.birth < :birth')
+            ->setParameter('slaughter', true)
+            ->setParameter('birth', $date)
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Cattle
+    public function getSlaughtered()
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('c.slaughtered = :slaughtered')
+            ->setParameter('slaughtered', true)
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getMilk()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('sum(c.milk) as milk')
+            ->where('c.slaughtered = :slaughtered')
+            ->setParameter('slaughtered', false)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function getRation()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('sum(c.ration) as ration')
+            ->where('c.slaughtered = :slaughtered')
+            ->setParameter('slaughtered', false)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
