@@ -1,51 +1,80 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container" style="box-shadow: 0px 0px 15px #0004; margin: 5% auto 0 auto; width: 90%;">
-        <h3> {{title}} </h3>
 
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-6">
-                {{form_row(form.code)}}
+    <div class="row"  
+         style="height: 100%;
+                display: flex; 
+                justify-content: center;
+                align-items: start;"
+    >
+        <div class="col-sm-10 col-xs-8" style="box-shadow: 0px 0px 15px #0004; padding: 15px;">
+            <h3> {{title}} </h3>
+
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-sm-4">
+                    {{form_row(form.code)}}
+                </div>
+
+                <div class="col-sm-4">
+                    {{form_row(form.milk)}}
+                </div>
+
+                <div class="col-sm-4">
+                    {{form_row(form.ration)}}
+                </div>
             </div>
 
-            <div class="col-md-6">
-                {{form_row(form.birth)}}
-            </div>
-        </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    {{form_row(form.weight)}}
+                </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                {{form_row(form.milk)}}
+                <div class="col-sm-4">
+                    {{form_label(form.birth)}}
+                    <div class="input-group" style="margin-bottom: 15px;"> 
+                        {{form_widget(form.birth)}}
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                        {{form_errors(form.birth)}}
+                    </div>
+                </div>
             </div>
-
-            <div class="col-md-4">
-                {{form_row(form.ration)}}
-            </div>
-
-            <div class="col-md-4">
-                {{form_row(form.weight)}}
-            </div>
-        </div>
         
-        <div class="row text-right" style="margin-bottom: 15px;">
-            <div class="col-xs-12">
-                {{form_widget(form.Salvar , {'attr': {'class': 'btn btn-primary'} })}}
-                
-                {% if new == true %}
-                    <a href="{{ path('getAll') }}" class="btn btn-danger" style="margin-left: 3px;">
-                        Cancelar
-                    </a>
+            <div class="row text-right">
+                <div class="col-xs-12">
+                    {{form_widget(form.Salvar , {'attr': {'class': 'btn btn-primary'} })}}
+                    
+                    {% if new == true %}
+                        <a href="{{ path('getAll') }}" class="btn btn-danger" style="margin-left: 3px;">
+                            Cancelar
+                        </a>
 
-                {% else %}
-                    <a href="{{ path('getById', {id: id}) }}" class="btn btn-danger" style="margin-left: 3px;">
-                        Cancelar
-                    </a>
-                {% endif %}
+                    {% else %}
+                        <a href="{{ path('getById', {id: id}) }}" class="btn btn-danger" style="margin-left: 3px;">
+                            Cancelar
+                        </a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
 
-        {{ form_end(form) }}
+            {{ form_end(form) }}
+        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                endDate: new Date(),
+                format: 'dd-mm-yyyy',
+                language: "pt-BR"
+            });
+        });
+    </script>
 {% endblock %}

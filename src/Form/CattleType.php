@@ -20,7 +20,13 @@ class CattleType extends AbstractType
             ->add('milk', NumberType::class, ['label'=>'Leite por semana (L)'])
             ->add('ration', NumberType::class, ['label'=>'Ração por semana (Kg)'])
             ->add('weight', NumberType::class, ['label'=>'Peso (Kg)'])
-            ->add('birth', DateType::class, ['label'=>'Nascimento'])
+            ->add('birth', DateType::class, [
+                'label'=>'Nascimento',
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'html5' => false,
+                'attr' => ['class' => 'js-datepicker']  
+            ])
             ->add('Salvar', SubmitType::class)
         ;
     }
