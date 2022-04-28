@@ -56,8 +56,10 @@ class CattleRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('c')
             ->where('c.slaughter = :slaughter OR c.birth < :birth')
+            ->andWhere('c.slaughtered = :slaughtered')
             ->setParameter('slaughter', true)
             ->setParameter('birth', $date)
+            ->setParameter('slaughtered', false)
             ->orderBy('c.id', 'ASC')
             ->getQuery()
             ->getResult()

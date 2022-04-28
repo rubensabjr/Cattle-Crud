@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cattle;
 use App\Form\CattleType;
+use App\Repository\CattleRepository;
 use App\Service\CattleService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,7 +59,9 @@ class CattleController extends AbstractController
      */
     public function getAll(ManagerRegistry $doctrine) : Response 
     {
-        $cattles = $doctrine->getRepository(Cattle::class)->findAll();
+        $cattles = $doctrine->getRepository(Cattle::class)->findBy(
+            ['slaughtered'=> false]
+        );
         
         if(!$cattles)
             throw $this->createNotFoundException('Not found!');
@@ -116,5 +119,30 @@ class CattleController extends AbstractController
             'new'=> false,
             'id'=> $id
         ]); 
+    }
+
+    /**
+     * @Route("/slaughter/{id}", name="slaughter")
+     */
+    public function slaughter(ManagerRegistry $doctrine, CattleRepository $repository, int $id = null) : Response
+    {
+        $entityManager = $doctrine->getManager();
+
+        if($id){
+            $cattle = $doctrine->getRepository(Cattle::class)->find($id);
+            $cattle->setSlaughtered(true);
+            $entityManager->flush();
+            return $this->redirectToRoute('slaughter');
+        }
+
+        $cattles = $repository->getForSlaughter();
+
+        if(!$cattles)
+            throw $this->createNotFoundException('Not found!');
+        
+        return $this->render('cattle/slaughter.html.twig', [
+            'title'=> 'Abate do Gado',
+            'cattles'=> $cattles
+        ]);
     }
 }

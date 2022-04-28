@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container" style="box-shadow: 0px 0px 15px #0004; padding: 15px; margin-bottom: 20px; width: 90%;">
+        <h3> {{title}} </h3>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Leite (L)</th>
+                        <th>Ração (Kg)</th>
+                        <th>Peso (Kg)</th>
+                        <th>Nascimento</th>
+                        <th>Abate</th>
+                        <th>Abatido</th>
+                        <th>Ações</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cattle in cattles %}
+                        <tr>
+                            <td>{{ cattle.id }}</td>
+                            <td> {{ cattle.code }} </td>
+                            <td> {{ cattle.milk }} </td>
+                            <td> {{ cattle.ration }} </td>
+                            <td> {{ cattle.weight }} </td>
+                            <td> {{ cattle.birth.format('d-m-Y') }} </td>
+                            <td> {{ cattle.slaughter ? 'true' : 'false' }} </td>
+                            <td> {{ cattle.slaughtered ? 'true' : 'false' }} </td>
+                            <td> <a  href="{{ path('slaughter', {id: cattle.id}) }}" class="btn btn-danger">Abater</a> </td>  
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
