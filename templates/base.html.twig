@@ -51,7 +51,7 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-default" style="background-color: #e3f2fd;">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button 
@@ -90,27 +90,27 @@
             </div>
         </nav>
 
-        <div class="container p-4"> 
-            {% block body %}
-                <div class="row"  
-                    style="height: 100%;
-                            display: flex; 
-                            justify-content: center;
-                            align-items: start;"
-                >
-
+        <div class="container p-4">
+            <div class="row"  
+                 style="height: 100%;
+                        display: flex; 
+                        justify-content: center;
+                        align-items: start"
+            >
+            
+                {% block body %}
                     <div class="col-md-6"> 
                         <div class="jumbotron" 
-                             style="box-shadow: 0px 0px 15px #0004; 
+                            style="box-shadow: 0px 0px 15px #0004; 
                                     padding: 15px; 
                                     background-color: white;">
-                            
+                                
                             <h1>Bem Vindo!</h1>
                             <p>Sistema de gestão de bovinos</p>
                         </div>
                     </div>
-                </div>
-            {% endblock %}
+                {% endblock %}
+            </div> 
         </div>
     </body>
 </html>

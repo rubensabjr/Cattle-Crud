@@ -1,48 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row"  
-         style="height: 100%;
-                display: flex; 
-                justify-content: center;
-                align-items: start;"
-    >
-        <div class="col-md-6 col-sm-10 col-xs-10" style="box-shadow: 0px 0px 15px #0004; padding: 15px;">
-            <div class="row text-center">
-                    <div class="col-xs-6">
-                        <div class="list-group" style="font-weight: bold;">
-                            <li class="list-group-item">ID</li>
-                            <li class="list-group-item">Código</li>
-                            <li class="list-group-item">Leite (L)</li>
-                            <li class="list-group-item">Ração (Kg)</li>
-                            <li class="list-group-item">Peso (Kg)</li>
-                            <li class="list-group-item">Nascimento</li>
-                            <li class="list-group-item">Abate</li>
-                            <li class="list-group-item">Abatido</li>
-                        </div>
-                    </div>
+	<div class="col-md-6 col-sm-10 col-xs-10" style="box-shadow: 0px 0px 15px #0004; padding: 15px; margin-bottom: 20px;">
+		<div class="row text-center">
+			<div class="col-xs-6">
+				<div class="list-group" style="font-weight: bold;">
+					<li class="list-group-item">ID</li>
+					<li class="list-group-item">Código</li>
+					<li class="list-group-item">Leite (L)</li>
+					<li class="list-group-item">Ração (Kg)</li>
+					<li class="list-group-item">Peso (Kg)</li>
+					<li class="list-group-item">Nascimento</li>
+					<li class="list-group-item">Abate</li>
+					<li class="list-group-item">Abatido</li>
+				</div>
+			</div>
 
-                    <div class="col-xs-6">
-                        <div class="list-group">
+			<div class="col-xs-6">
+				<div class="list-group">
 
-                            <li class="list-group-item">{{ cattle.id }}</li>
-                            <li class="list-group-item">{{ cattle.code }}</li>
-                            <li class="list-group-item">{{ cattle.milk }}</li>
-                            <li class="list-group-item">{{ cattle.ration }}</li>
-                            <li class="list-group-item">{{ cattle.weight }}</li>
-                            <li class="list-group-item">{{ cattle.birth.format('d-m-Y') }}</li>
-                            <li class="list-group-item">{{ cattle.slaughter ? 'true' : 'false' }}</li>
-                            <li class="list-group-item">{{ cattle.slaughtered ? 'true' : 'false' }}</li>
-                        </div>
-                    </div>
-                </div>
+					<li class="list-group-item">{{ cattle.id }}</li>
+					<li class="list-group-item">{{ cattle.code }}</li>
+					<li class="list-group-item">{{ cattle.milk }}</li>
+					<li class="list-group-item">{{ cattle.ration }}</li>
+					<li class="list-group-item">{{ cattle.weight }}</li>
+					<li class="list-group-item">{{ cattle.birth.format('d-m-Y') }}</li>
+					<li class="list-group-item">{{ cattle.slaughter ? 'true' : 'false' }}</li>
+					<li class="list-group-item">{{ cattle.slaughtered ? 'true' : 'false' }}</li>
+				</div>
+			</div>
+		</div>
 
-                <div class="row text-right">
-                    <div class="col-xs-12">
-                        <a href="{{ path('update', {id: cattle.id}) }}" class="btn btn-primary">Editar</a>
-                        <a href="{{ path('getAll') }}" class="btn btn-danger" style="margin-left: 3px;">Cancelar</a>
-                    </div>
-                </div>
-        </div>
-    </div>
+		<div class="row text-right">
+			<div class="col-xs-12">
+				<a href="{{ path('update', {id: cattle.id}) }}" class="btn btn-primary">Editar</a>
+				<a href="{{ path('getAll') }}" class="btn btn-danger" style="margin-left: 3px;">Cancelar</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}
