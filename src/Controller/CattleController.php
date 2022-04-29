@@ -124,7 +124,7 @@ class CattleController extends AbstractController
     /**
      * @Route("/slaughter/{id}", name="slaughter")
      */
-    public function slaughter(ManagerRegistry $doctrine, CattleRepository $repository, int $id = null) : Response
+    public function slaughter(ManagerRegistry $doctrine, CattleRepository $repository, int $id = null): Response
     {
         $entityManager = $doctrine->getManager();
 
@@ -143,6 +143,54 @@ class CattleController extends AbstractController
         return $this->render('cattle/slaughter.html.twig', [
             'title'=> 'Abate do Gado',
             'cattles'=> $cattles
+        ]);
+    }
+
+    /**
+     * @Route("/slaughtered", name="slaughtered")
+     */
+    public function slaughtered(CattleRepository $repository): Response 
+    {
+        $cattles = $repository->getSlaughtered();
+
+        if(!$cattles)
+            throw $this->createNotFoundException('Not found!');
+
+        return $this->render('cattle/slaughtered.html.twig', [
+            'title'=> 'Animais Abatidos',
+            'cattles'=> $cattles
+        ]);
+    }
+
+    /**
+     * @Route("/milk", name="milkWeek")
+     */
+    public function milk(CattleRepository $repository): Response 
+    {
+        $milk = $repository->getMilk();
+
+        if(!$milk)
+            throw $this->createNotFoundException('Not found!');
+
+        return $this->render('cattle/milk.html.twig', [
+            'title'=> 'Leite produzido por semana',
+            'milk'=> $milk
+        ]);
+    }
+
+    /**
+     * @Route("/ration", name="rationWeek")
+     */
+    public function ration(CattleRepository $repository): Response 
+    {
+        $ration = $repository->getRation();
+
+        if(!$ration)
+            throw $this->createNotFoundException('Not found!');
+
+        return $this->render('cattle/ration.html.twig', [
+            'title'=> 'Ração necessária por semana',
+            'ration'=> $ration
         ]);
     }
 }

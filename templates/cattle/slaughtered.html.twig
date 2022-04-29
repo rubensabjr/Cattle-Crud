@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        th {
+            text-align: center;
+        }
+
+        #list {
+            box-shadow: 0px 0px 15px #0004; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            width: 70%;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <div class="container" id="list">
+        <h3 class="title"> {{title}} </h3>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr class="info">
+                        <th>Código</th>
+                        <th>Peso (Kg)</th>
+                        <th>Nascimento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cattle in cattles %}
+                        <tr class="danger text-center">
+                            <td> {{ cattle.code }} </td>
+                            <td> {{ cattle.weight }} </td>
+                            <td> {{ cattle.birth.format('d-m-Y') }} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

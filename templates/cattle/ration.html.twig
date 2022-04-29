@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .jumbotron {
+            box-shadow: 0px 0px 15px #0004; 
+            padding: 15px; 
+            background-color: #e3f2fd;
+        }
+
+        #report {
+            margin-top: 20px;
+        }
+    </style>
+
+	<div class="col-md-6">
+		<div class="jumbotron text-center">
+            <i class="fa fa-file-text fa-3x" id="report"></i>
+			<h3>{{title}}</h3>
+			<p>{{ration.ration}} Litros</p>
+		</div>
+	</div>
+{% endblock %}
