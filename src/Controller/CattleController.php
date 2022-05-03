@@ -33,13 +33,13 @@ class CattleController extends AbstractController
         $cattle = new Cattle();
         $cattle->setSlaughtered(false);
 
+        $form = $this->createForm(CattleType::class, $cattle);
+        $form->handleRequest($request);
+
         if($cs->Slaughter($cattle))
             $cattle->setSlaughter(true);
         else
             $cattle->setSlaughter(false);
-
-        $form = $this->createForm(CattleType::class, $cattle);
-        $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($cattle);
