@@ -62,9 +62,6 @@ class CattleController extends AbstractController
         $cattles = $doctrine->getRepository(Cattle::class)->findBy(
             ['slaughtered'=> false]
         );
-        
-        if(!$cattles)
-            throw $this->createNotFoundException('Not found!');
 
         return $this->render('cattle/index.html.twig', [
             'title'=> 'Gerenciamento do Gado',
@@ -80,7 +77,7 @@ class CattleController extends AbstractController
         $cattle = $doctrine->getRepository(Cattle::class)->find($id);
 
         if(!$cattle)
-            throw $this->createNotFoundException('No cattle found for id '.$id);
+            throw $this->createNotFoundException('No cattle found!');
 
         return $this->render('cattle/cattle.html.twig', [
             'title'=> 'Gado',
@@ -136,9 +133,6 @@ class CattleController extends AbstractController
         }
 
         $cattles = $repository->getForSlaughter();
-
-        if(!$cattles)
-            throw $this->createNotFoundException('Not found!');
         
         return $this->render('cattle/slaughter.html.twig', [
             'title'=> 'Abate do Gado',
@@ -153,9 +147,6 @@ class CattleController extends AbstractController
     {
         $cattles = $repository->getSlaughtered();
 
-        if(!$cattles)
-            throw $this->createNotFoundException('Not found!');
-
         return $this->render('cattle/slaughtered.html.twig', [
             'title'=> 'Animais Abatidos',
             'cattles'=> $cattles
@@ -169,9 +160,6 @@ class CattleController extends AbstractController
     {
         $milk = $repository->getMilk();
 
-        if(!$milk)
-            throw $this->createNotFoundException('Not found!');
-
         return $this->render('cattle/milk.html.twig', [
             'title'=> 'Leite produzido por semana',
             'milk'=> $milk
@@ -184,9 +172,6 @@ class CattleController extends AbstractController
     public function ration(CattleRepository $repository): Response 
     {
         $ration = $repository->getRation();
-
-        if(!$ration)
-            throw $this->createNotFoundException('Not found!');
 
         return $this->render('cattle/ration.html.twig', [
             'title'=> 'Ração necessária por semana',

@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\CattleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CattleRepository::class)
+ * @UniqueEntity(fields={"code"}, message="Código já cadastrado")
  */
 class Cattle
 {
@@ -19,21 +22,30 @@ class Cattle
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Somente valores positivos permitidos")
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 7,
+     *      maxMessage = "Limite de 7 caracteres"
+     * )
      */
     private $code;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\PositiveOrZero(message="Somente valores iguais ou maiores que 0 permitidos")
      */
     private $milk;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\PositiveOrZero(message="Somente valores iguais ou maiores que 0 permitidos")
      */
     private $ration;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\PositiveOrZero(message="Somente valores iguais ou maiores que 0 permitidos")
      */
     private $weight;
 
