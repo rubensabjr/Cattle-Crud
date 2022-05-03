@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 class CattleController extends AbstractController
 {
@@ -60,15 +61,21 @@ class CattleController extends AbstractController
     /**
      * @Route("/cattle", name="getAll")
      */
-    public function getAll(ManagerRegistry $doctrine) : Response 
+    public function getAll(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request) : Response 
     {
         $cattles = $doctrine->getRepository(Cattle::class)->findBy(
             ['slaughtered'=> false]
         );
 
+        $cattlesPage = $paginator->paginate(
+            $cattles,
+            $request->query->getInt('page', 1),
+            7
+        );
+
         return $this->render('cattle/index.html.twig', [
             'title'=> 'Gerenciamento do Gado',
-            'cattles'=> $cattles
+            'cattles'=> $cattlesPage
         ]);
     }
 
@@ -127,7 +134,7 @@ class CattleController extends AbstractController
     /**
      * @Route("/slaughter/{id}", name="slaughter")
      */
-    public function slaughter(ManagerRegistry $doctrine, CattleRepository $repository, int $id = null): Response
+    public function slaughter(ManagerRegistry $doctrine, CattleRepository $repository, int $id = null, PaginatorInterface $paginator, Request $request): Response
     {
         $entityManager = $doctrine->getManager();
 
@@ -142,23 +149,35 @@ class CattleController extends AbstractController
         }
 
         $cattles = $repository->getForSlaughter();
+
+        $cattlesPage = $paginator->paginate(
+            $cattles,
+            $request->query->getInt('page', 1),
+            7
+        );
         
         return $this->render('cattle/slaughter.html.twig', [
             'title'=> 'Abate do Gado',
-            'cattles'=> $cattles
+            'cattles'=> $cattlesPage
         ]);
     }
 
     /**
      * @Route("/slaughtered", name="slaughtered")
      */
-    public function slaughtered(CattleRepository $repository): Response 
+    public function slaughtered(CattleRepository $repository, PaginatorInterface $paginator, Request $request): Response 
     {
         $cattles = $repository->getSlaughtered();
 
+        $cattlesPage = $paginator->paginate(
+            $cattles,
+            $request->query->getInt('page', 1),
+            7
+        );
+
         return $this->render('cattle/slaughtered.html.twig', [
             'title'=> 'Animais Abatidos',
-            'cattles'=> $cattles
+            'cattles'=> $cattlesPage
         ]);
     }
 
