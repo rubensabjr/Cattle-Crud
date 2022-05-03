@@ -36,14 +36,17 @@ class CattleController extends AbstractController
         $form = $this->createForm(CattleType::class, $cattle);
         $form->handleRequest($request);
 
-        if($cs->Slaughter($cattle))
-            $cattle->setSlaughter(true);
-        else
-            $cattle->setSlaughter(false);
-
         if($form->isSubmitted() && $form->isValid()){
+            if($cs->Slaughter($cattle))
+                $cattle->setSlaughter(true);
+            else
+                $cattle->setSlaughter(false);
+
             $entityManager->persist($cattle);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Animal registrado com sucesso!');
+
             return $this->redirectToRoute('getAll');
         }
 
@@ -97,16 +100,19 @@ class CattleController extends AbstractController
         if(!$cattle)
             throw $this->createNotFoundException('No cattle found for id '.$id);
 
-        if($cs->Slaughter($cattle))
-            $cattle->setSlaughter(true);
-        else
-            $cattle->setSlaughter(false);
-
         $form = $this->createForm(CattleType::class, $cattle);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            if($cs->Slaughter($cattle))
+                $cattle->setSlaughter(true);
+            else
+                $cattle->setSlaughter(false);
+
             $entityManager->flush();
+
+            $this->addFlash('success', 'Animal atualizado com sucesso!');
+
             return $this->redirectToRoute('getAll');
         }
 
@@ -129,6 +135,9 @@ class CattleController extends AbstractController
             $cattle = $doctrine->getRepository(Cattle::class)->find($id);
             $cattle->setSlaughtered(true);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Animal abatido com sucesso!');
+
             return $this->redirectToRoute('slaughter');
         }
 

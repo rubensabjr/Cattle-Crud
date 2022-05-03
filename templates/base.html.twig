@@ -46,6 +46,14 @@
             <script 
                 src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js">
             </script>
+
+            <script>
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+                }, 2000);
+            </script>
             
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
@@ -91,6 +99,14 @@
         </nav>
 
         <div class="container p-4">
+            {% for message in app.flashes('success') %}
+                <div class="row" style="display: flex; justify-content: center;">
+                    <div class="alert alert-success text-center" style="width: auto;">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+
             <div class="row"  
                  style="height: 100%;
                         display: flex; 
