@@ -82,13 +82,23 @@ class CattleController extends AbstractController
     /**
      * @Route("/cattle/{id}", name="getById")
      */
-    public function getById(ManagerRegistry $doctrine, int $id) : Response 
+    public function getById(ManagerRegistry $doctrine, int $id, CattleService $cs) : Response 
     {
-        $cattle = $doctrine->getRepository(Cattle::class)->find($id);
+        $entityManager = $doctrine->getManager();
 
-        if(!$cattle)
-            throw $this->createNotFoundException('No cattle found!');
+        $cattle = $entityManager->getRepository(Cattle::class)->find($id);
+        
+        if(!$cattle || $cattle->getSlaughtered()){
+            $this->addFlash('error', 'Animal não existe!');
 
+            return $this->redirectToRoute('getAll');
+        }
+
+        if($cs->Slaughter($cattle)){
+            $cattle->setSlaughter(true);
+            $entityManager->flush();
+        }
+        
         return $this->render('cattle/cattle.html.twig', [
             'title'=> 'Gado',
             'cattle'=> $cattle
@@ -104,8 +114,11 @@ class CattleController extends AbstractController
         
         $cattle = $entityManager->getRepository(Cattle::class)->find($id);
 
-        if(!$cattle)
-            throw $this->createNotFoundException('No cattle found for id '.$id);
+        if(!$cattle || $cattle->getSlaughtered()){
+            $this->addFlash('error', 'Animal não existe!');
+
+            return $this->redirectToRoute('getAll');
+        }
 
         $form = $this->createForm(CattleType::class, $cattle);
         $form->handleRequest($request);
