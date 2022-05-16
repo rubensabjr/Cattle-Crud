@@ -19,9 +19,18 @@ class CattleController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index() : Response 
+    public function index(CattleRepository $repository) : Response 
     {
-        return $this->render('base.html.twig', ['title'=> 'Bem Vindo!']);
+        $milk = $repository->getMilk();
+        $ration = $repository->getRation();
+
+        return $this->render('base.html.twig', [
+            'title'=> 'Bem Vindo!',
+            'titleMilk'=> 'Leite produzido por semana',
+            'titleRation'=> 'Ração necessária por semana',
+            'milk'=> $milk,
+            'ration'=> $ration
+        ]);
     }
 
     /**
@@ -195,32 +204,6 @@ class CattleController extends AbstractController
         return $this->render('cattle/slaughtered.html.twig', [
             'title'=> 'Animais Abatidos',
             'cattles'=> $cattlesPage
-        ]);
-    }
-
-    /**
-     * @Route("/milk", name="milkWeek")
-     */
-    public function milk(CattleRepository $repository): Response 
-    {
-        $milk = $repository->getMilk();
-
-        return $this->render('cattle/milk.html.twig', [
-            'title'=> 'Leite produzido por semana',
-            'milk'=> $milk
-        ]);
-    }
-
-    /**
-     * @Route("/ration", name="rationWeek")
-     */
-    public function ration(CattleRepository $repository): Response 
-    {
-        $ration = $repository->getRation();
-
-        return $this->render('cattle/ration.html.twig', [
-            'title'=> 'Ração necessária por semana',
-            'ration'=> $ration
         ]);
     }
 }

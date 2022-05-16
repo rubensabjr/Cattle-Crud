@@ -85,15 +85,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ path('getAll') }}">Gado</a></li>
                         <li><a href="{{ path('slaughter') }}">Abate</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Relatórios
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ path('milkWeek') }}">Leite por Semana</a></li>
-                                <li><a href="{{ path('slaughtered') }}">Animais Abatidos</a></li>
-                                <li><a href="{{ path('rationWeek') }}">Ração por Semana</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="{{ path('slaughtered') }}">Abatidos</a></li>
                     </ul>
                 </div>
             </div>
@@ -135,12 +127,24 @@
                             margin-top: 20px;
                         }
                     </style>
+                    
+                    <div class="col-sm-10 col-xs-8">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="jumbotron text-center">
+                                    <i class="fa fa-file-text fa-3x" id="report"></i>
+                                    <h3>{{titleMilk}}</h3>
+                                    <p>{{milk.milk}} Litros</p>
+                                </div>
+                            </div>
 
-                    <div class="col-md-6"> 
-                        <div class="jumbotron text-center">
-                            <i class="fa fa-smile-o fa-5x" id="report"></i>    
-                            <h2>Bem Vindo!</h2>
-                            <p>Sistema de gestão de bovinos</p>
+                            <div class="col-sm-6">
+                                <div class="jumbotron text-center">
+                                    <i class="fa fa-file-text fa-3x" id="report"></i>
+                                    <h3>{{titleRation}}</h3>
+                                    <p>{{ration.ration}} Kilos</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endblock %}
