@@ -51,7 +51,7 @@
                             <td> {{ cattle.milk }} </td>
                             <td> {{ cattle.ration }} </td>
                             <td> {{ cattle.weight }} </td>
-                            <td> {{ cattle.birth.format('d-m-Y') }} </td>
+                            <td> {{ cattle.birth.format('d/m/Y') }} </td>
                             <td> <a  href="{{ path('getById', {id: cattle.id}) }}" class="btn btn-primary btn-sm">Ver</a> </td>  
                         </tr>
                     {% endfor %}

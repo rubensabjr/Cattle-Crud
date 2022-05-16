@@ -12,7 +12,6 @@
 					<li class="list-group-item">Peso (Kg)</li>
 					<li class="list-group-item">Nascimento</li>
 					<li class="list-group-item">Abate</li>
-					<li class="list-group-item">Abatido</li>
 				</div>
 			</div>
 
@@ -25,8 +24,13 @@
 					<li class="list-group-item">{{ cattle.ration }}</li>
 					<li class="list-group-item">{{ cattle.weight }}</li>
 					<li class="list-group-item">{{ cattle.birth.format('d-m-Y') }}</li>
-					<li class="list-group-item">{{ cattle.slaughter ? 'true' : 'false' }}</li>
-					<li class="list-group-item">{{ cattle.slaughtered ? 'true' : 'false' }}</li>
+					<li class="list-group-item">
+						{% if cattle.slaughter == true %}
+							<i class="fa fa-check fa-lg" aria-hidden="true"></i>
+						{% else %}
+							<i class="fa fa-times fa-lg" aria-hidden="true"></i>
+						{% endif %}
+					</li>
 				</div>
 			</div>
 		</div>
