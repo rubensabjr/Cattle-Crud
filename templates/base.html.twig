@@ -106,6 +106,14 @@
                     </div>
                 </div>
             {% endfor %}
+            
+            {% for message in app.flashes('error') %}
+                <div class="row" style="display: flex; justify-content: center;">
+                    <div class="alert alert-danger text-center" style="width: auto;">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
 
             <div class="row"  
                  style="height: 100%;

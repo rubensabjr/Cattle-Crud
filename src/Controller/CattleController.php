@@ -134,16 +134,20 @@ class CattleController extends AbstractController
     /**
      * @Route("/slaughter/{id}", name="slaughter")
      */
-    public function slaughter(ManagerRegistry $doctrine, CattleRepository $repository, int $id = null, PaginatorInterface $paginator, Request $request): Response
+    public function slaughter(ManagerRegistry $doctrine, CattleRepository $repository, int $id = null, PaginatorInterface $paginator, Request $request, CattleService $cs): Response
     {
         $entityManager = $doctrine->getManager();
 
         if($id){
             $cattle = $doctrine->getRepository(Cattle::class)->find($id);
-            $cattle->setSlaughtered(true);
-            $entityManager->flush();
 
-            $this->addFlash('success', 'Animal abatido com sucesso!');
+            if($cs->Slaughter($cattle) && !$cattle->getSlaughtered()){
+                $cattle->setSlaughtered(true);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Animal abatido com sucesso!');
+            }else
+                $this->addFlash('error', 'Animal inválido para abate!');
 
             return $this->redirectToRoute('slaughter');
         }

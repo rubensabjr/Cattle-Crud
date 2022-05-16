@@ -13,7 +13,7 @@ class CattleService
         $sub = $now->sub(new \DateInterval('P5Y'));
         $date = $sub->format('Y-m-d');
 
-        if($cattle->getBirth() < $date)
+        if($cattle->getBirth()->format('Y-m-d') < $date)
             return true;
         elseif($cattle->getMilk() < 40)
             return true;
